@@ -1,3 +1,5 @@
+// the transport layer of the app.
+// Transport has no dependents, so can be http/grpc, etc
 package main
 
 import (
@@ -7,6 +9,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/jignesh119/ecommerce-go/internal/products"
 )
 
 // mount
@@ -25,6 +28,11 @@ func (app *application) mount() http.Handler {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("hit /"))
 	})
+
+	productsService := products.NewService()
+	productsHandler := products.NewHandler(productsService)
+
+	r.Get("/products", productsHandler.ListProducts)
 
 	// http.ListenAndServe(":3333", r)
 	return r

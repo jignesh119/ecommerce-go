@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -40,7 +40,7 @@ func (app *application) run(h http.Handler) error {
 		ReadTimeout:  time.Second * 10,
 		IdleTimeout:  time.Minute,
 	}
-	fmt.Printf("Server started at %s", app.config.addr)
+	log.Printf("Server started at %s\n", app.config.addr)
 	return srv.ListenAndServe()
 }
 
